@@ -1,0 +1,27 @@
+name: GitHub Actions Demo
+# ?: What is run-name?
+run-name: ${{github.actor}}가 Github Action을 배우고 있습니다!!
+on: [push] # event 설정
+jobs:
+  Explore-Github-Actions:
+    runs-on: ubuntu-latest # sets runner
+    # ?: What kinds of runners could I use?
+    steps:
+      - run: echo "Hello World!"
+      - run: echo "github.event_name) ${{github.event_name}} (Event Name)"
+      # yaml 쓸 떄 콜론 기호는 피하는 걸로
+      - run: echo "runner.os) ${{runner.os}}"
+      - run: echo "github.ref) ${{github.ref}} (Branch Name)"
+      - run: echo "github.repository) ${{github.repository}} (Repo Name)"
+      - name: Check out repository code
+        uses: actions/checkout@v4 # = Action?
+      # Checkout a Git repository at a particular version
+      # huh
+      # +) I can set `name` on a step! (over `run`s too.)
+      - name: List files in the repository
+        run: |
+          ls ${{github.workspace}}
+      # https://stackoverflow.com/a/18708156
+      # `|`(vertical bar) = 'multi-line scalar'
+      - run: echo "github.workspace) ${{github.workspace}} (pwd for Runner/Github Action)"
+      - run: echo "job.status) ${{job.status}} (Job Status(?))"
